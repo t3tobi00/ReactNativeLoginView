@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SignupView = ({ onBack }: { onBack: () => void }) => {
   return (
@@ -20,6 +21,7 @@ const SignupView = ({ onBack }: { onBack: () => void }) => {
           style={styles.input}
           placeholder="Full Name"
           placeholderTextColor="#9C9C9C"
+          autoFocus = {true}
         />
       </View>
 
@@ -29,6 +31,8 @@ const SignupView = ({ onBack }: { onBack: () => void }) => {
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="#9C9C9C"
+          keyboardType='email-address'
+          textContentType='emailAddress'
         />
       </View>
 
@@ -38,6 +42,7 @@ const SignupView = ({ onBack }: { onBack: () => void }) => {
           style={styles.input}
           placeholder="Password"
           placeholderTextColor="#9C9C9C"
+          textContentType='password'
           secureTextEntry
         />
       </View>
@@ -54,12 +59,19 @@ const SignupView = ({ onBack }: { onBack: () => void }) => {
 
       {/* Signup Button */}
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>SIGN UP</Text>
-        <Ionicons name="arrow-forward-outline" size={20} color="white" />
-      </TouchableOpacity>
+              <LinearGradient
+                colors={['#FAC856', '#FDA13B']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.gradientButton}
+              >
+                <Text style={styles.buttonText}>SIGN UP</Text>
+                <Ionicons name="arrow-forward-outline" size={20} color="white" />
+              </LinearGradient>
+            </TouchableOpacity>
 
       {/* Sign In Link */}
-      <TouchableOpacity onPress={onBack}>
+      <TouchableOpacity onPress={onBack} style={styles.signupContainer}>
         <Text style={styles.signInText}>
           Already have an account? <Text style={styles.signInLink}>Sign in</Text>
         </Text>
@@ -106,6 +118,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     borderColor: "#EAEAEA",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
   icon: {
     marginRight: 10,
@@ -116,13 +136,18 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#F5A623",
-    borderRadius: 8,
+    marginTop: 20, // Add margin to position the button
+    borderRadius: 8, // Ensure rounded corners
+    overflow: 'hidden', // Prevent gradient overflow
+  },
+  gradientButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 15,
-    marginTop: 20,
+    width: "50%",
+    alignSelf: "flex-end",
+    borderRadius: 50,
   },
   buttonText: {
     color: "#FFFFFF",
@@ -135,6 +160,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 12,
     color: "#6B6B6B",
+  },
+  signupContainer: {
+    position: "absolute", // Anchor it to the bottom
+    bottom: 30, // Distance from the bottom edge
+    alignSelf: "center", // Center it horizontally
   },
   signInLink: {
     color: "#F5A623",

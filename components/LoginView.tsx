@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginView = ({ onSignupPress }: { onSignupPress: () => void }) => {
   return (
@@ -16,6 +17,9 @@ const LoginView = ({ onSignupPress }: { onSignupPress: () => void }) => {
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="#9C9C9C"
+          autoFocus = {true}
+          keyboardType='email-address'
+          textContentType='emailAddress'
         />
       </View>
 
@@ -35,12 +39,19 @@ const LoginView = ({ onSignupPress }: { onSignupPress: () => void }) => {
 
       {/* Login Button */}
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>LOGIN</Text>
-        <Ionicons name="arrow-forward-outline" size={20} color="white" />
+        <LinearGradient
+          colors={['#FAC856', '#FDA13B']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradientButton}
+        >
+          <Text style={styles.buttonText}>LOGIN</Text>
+          <Ionicons name="arrow-forward-outline" size={20} color="white" />
+        </LinearGradient>
       </TouchableOpacity>
 
       {/* Sign Up Link */}
-      <TouchableOpacity onPress={onSignupPress}>
+      <TouchableOpacity onPress={onSignupPress} style={styles.signupContainer}>
         <Text style={styles.signupText}>
           Don’t have an account? <Text style={styles.signupLink}>Sign up</Text>
         </Text>
@@ -87,6 +98,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     borderColor: "#EAEAEA",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
   icon: {
     marginRight: 10,
@@ -101,20 +120,31 @@ const styles = StyleSheet.create({
     color: "#F5A623",
     fontWeight: "bold",
   },
+  // #FAC856 #FDA13B
   button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#F5A623",
-    borderRadius: 8,
+    marginTop: 20, // Add margin to position the button
+    borderRadius: 8, // Ensure rounded corners
+    overflow: 'hidden', // Prevent gradient overflow
+  },
+  gradientButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 15,
-    marginTop: 20,
+    width: "50%",
+    alignSelf: "flex-end",
+    borderRadius: 50,
   },
   buttonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "bold",
     marginRight: 5,
+  },
+  signupContainer: {
+    position: "absolute", // Anchor it to the bottom
+    bottom: 30, // Distance from the bottom edge
+    alignSelf: "center", // Center it horizontally
   },
   signupText: {
     marginTop: 20,
